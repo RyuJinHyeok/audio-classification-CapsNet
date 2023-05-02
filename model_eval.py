@@ -99,6 +99,21 @@ def test_graph(model, data, args):
     print('0:총소리 1:응급차량 2:화재/침입경보 3:자동차주행음 4:자동차경적 5:자전거경적')
     print(classification_report(np.argmax(y_test, 1), np.argmax(y_pred, 1), target_names=labels))
     print('\nConfusion Matrix')
+
+    print('\nAccuracy')
+    y_test_label = np.argmax(y_test, 1)
+    y_pred_label = np.argmax(y_pred, 1)
+    cnt = np.array([0, 0, 0, 0, 0, 0])
+
+    testset = os.listdir(dir_test)
+    for i in range(300):
+        if y_test_label[i] == y_pred_label[i]:
+            cnt[y_test_label[i]] += 1
+        else:
+            print(testset[i], y_pred_label[i], y_pred[i])
+    
+    print(cnt / 50)
+
     return cm, labels
 
 # read HDF5 file
@@ -106,7 +121,7 @@ def test_dataset():
     x_train_mfcc = []
     y_train_mfcc = []
 
-    for i in range(0, n_label):  # 1~24 class
+    for i in range(0, n_label):  # 1~6 class
         for ds_name in ['mfcc', 'y']:
             if ds_name == 'mfcc':
                 count = "mfcc_y_%ix%i_%i" % (height, width, i)
@@ -146,7 +161,7 @@ def eval():
         os.makedirs(args.save_dir)
 
     # load model
-    eval_model = load_model(model_save + 'eval.h5',
+    eval_model = load_model('CapsNet/model/base_model/' + 'eval.h5',
                             custom_objects={'CapsuleLayer': CapsuleLayer, 'Mask': Mask, 'Distance': Distance,
                                             'PrimaryCab': PrimaryCap, 'margin_loss': margin_loss})
     eval_model.summary()

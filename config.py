@@ -17,7 +17,7 @@ height = 48 # Input image height
 width = 173 # Input image width
 
 # dir_result
-model_name = 'hi'
+model_name = 'test1'
 model_save = 'CapsNet/model/%s/' % model_name
 result_save = 'CapsNet/result/%s/' % model_name
 

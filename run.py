@@ -14,5 +14,6 @@ from model_eval import eval
 # --- NOTICE ---
 # you must modify directory paths in config.py
 
-fit()
+# start_hdf_test()
+# fit()
 eval()
